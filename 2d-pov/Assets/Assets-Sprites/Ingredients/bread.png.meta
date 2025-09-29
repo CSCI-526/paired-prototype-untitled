@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 947c43a59ad1c164784ca9833dc1dc4d
+guid: 0c5a32181054fdb48a933bd6c110d5de
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3877866709460508296
-    second: croissant_0
+      213: -4431494890709657585
+    second: bread_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -52,11 +52,11 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteBorder: {x: 264, y: 506, z: 235, w: 681}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
-  spriteTessellationDetail: -1
+  spriteTessellationDetail: 0
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
@@ -113,33 +113,65 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: croissant_0
+      name: bread_0
       rect:
         serializedVersion: 2
-        x: 248
-        y: 574
-        width: 1513
-        height: 766
+        x: 267
+        y: 503
+        width: 1543
+        height: 871
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8712b4806cc0f2ac0800000000000000
-      internalID: -3877866709460508296
+      spriteID: f08da4f30ea2082c0800000000000000
+      internalID: -4431494890709657585
       vertices: []
       indices: 
       edges: []
       weights: []
     outline: []
     customData: 
-    physicsShape: []
+    physicsShape:
+    - - {x: -759, y: -268}
+      - {x: -747, y: -357}
+      - {x: -717, y: -429}
+      - {x: -591, y: -503}
+      - {x: -506, y: -518}
+      - {x: -403, y: -519}
+      - {x: -272, y: -519}
+      - {x: -145, y: -502}
+      - {x: 7, y: -485}
+      - {x: 183, y: -444}
+      - {x: 367, y: -380}
+      - {x: 501, y: -301}
+      - {x: 594, y: -237}
+      - {x: 676, y: -165}
+      - {x: 757, y: -51}
+      - {x: 785, y: 42}
+      - {x: 780, y: 147}
+      - {x: 748, y: 225}
+      - {x: 656, y: 291}
+      - {x: 522, y: 327}
+      - {x: 380, y: 352}
+      - {x: 281, y: 318}
+      - {x: 202, y: 288}
+      - {x: 128, y: 199}
+      - {x: 15, y: 220}
+      - {x: -87, y: 203}
+      - {x: -203, y: 157}
+      - {x: -318, y: 88}
+      - {x: -368, y: 11}
+      - {x: -503, y: -14}
+      - {x: -604, y: -68}
+      - {x: -694, y: -163}
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 0
+    internalID: 1537655665
     vertices: []
     indices: 
     edges: []
@@ -148,7 +180,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      croissant_0: -3877866709460508296
+      bread_0: -4431494890709657585
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

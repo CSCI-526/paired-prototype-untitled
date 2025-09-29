@@ -53,8 +53,6 @@ public class Plate : MonoBehaviour
         if (ingredientParent != null)
             ingredient.transform.SetParent(ingredientParent);
         
-        // Disable dragging for this ingredient (it's now on the plate)
-        ingredient.DisableDragging();
         
         // Update ingredient's original position so it doesn't return to old spot
         ingredient.SetNewOriginalPosition();

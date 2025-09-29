@@ -3,7 +3,7 @@ using UnityEngine;
 public class DraggableIngredient : MonoBehaviour
 {
     [Header("Drag Settings")]
-    public LayerMask plateLayerMask = -1; // What layers count as valid drop zones
+    public LayerMask plateLayerMask = -1; // Layer mask to identify plates
     public float dragOffset = 0.1f; // How far in front of camera to place while dragging
     
     private Camera mainCamera;
@@ -23,7 +23,7 @@ public class DraggableIngredient : MonoBehaviour
     {
         mainCamera = Camera.main;
         if (mainCamera == null)
-            mainCamera = FindObjectOfType<Camera>();
+            mainCamera = FindAnyObjectByType<Camera>();
             
         originalPosition = transform.position;
         col2D = GetComponent<Collider2D>();
@@ -90,12 +90,13 @@ public class DraggableIngredient : MonoBehaviour
         
         // Check if we're over a valid drop zone
         Plate plateBelow = GetPlateBelow();
-        
+
         if (plateBelow != null)
         {
             // Successfully dropped on plate
             plateBelow.AddIngredient(this);
             OnDroppedOnPlate?.Invoke(this, plateBelow);
+            SetNewOriginalPosition(); // Update original position to new plate position
         }
         else
         {
@@ -163,11 +164,6 @@ public class DraggableIngredient : MonoBehaviour
         originalPosition = transform.position;
     }
     
-    // Disable dragging (useful for ingredients already on plate)
-    public void DisableDragging()
-    {
-        enabled = false;
-    }
     
     public void EnableDragging()
     {
