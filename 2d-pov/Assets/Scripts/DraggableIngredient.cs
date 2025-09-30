@@ -10,7 +10,6 @@ public class DraggableIngredient : MonoBehaviour
     private Vector3 originalPosition;
     private bool isDragging = false;
     private Collider2D col2D;
-    private Rigidbody2D rb2D;
     private int originalSortingOrder;
     private SpriteRenderer spriteRenderer;
     
@@ -27,7 +26,6 @@ public class DraggableIngredient : MonoBehaviour
             
         originalPosition = transform.position;
         col2D = GetComponent<Collider2D>();
-        rb2D = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         
         if (spriteRenderer != null)
@@ -64,10 +62,6 @@ public class DraggableIngredient : MonoBehaviour
     void StartDragging()
     {
         isDragging = true;
-        
-        // Disable physics while dragging
-        if (rb2D != null)
-            rb2D.isKinematic = true;
             
         // Bring to front while dragging
         if (spriteRenderer != null)
@@ -79,10 +73,7 @@ public class DraggableIngredient : MonoBehaviour
     void StopDragging()
     {
         isDragging = false;
-        
-        // Re-enable physics
-        if (rb2D != null)
-            rb2D.isKinematic = false;
+
             
         // Reset sorting order
         if (spriteRenderer != null)
@@ -96,7 +87,6 @@ public class DraggableIngredient : MonoBehaviour
             // Successfully dropped on plate
             plateBelow.AddIngredient(this);
             OnDroppedOnPlate?.Invoke(this, plateBelow);
-            SetNewOriginalPosition(); // Update original position to new plate position
         }
         else
         {
@@ -164,6 +154,10 @@ public class DraggableIngredient : MonoBehaviour
         originalPosition = transform.position;
     }
     
+    public Vector3 GetOriginalPosition()
+    {
+        return originalPosition;
+    }
     
     public void EnableDragging()
     {

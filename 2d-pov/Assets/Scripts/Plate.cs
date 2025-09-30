@@ -13,6 +13,7 @@ public class Plate : MonoBehaviour
     public GameObject highlightEffect; // Optional highlight when hovering
     public Color highlightColor = Color.yellow;
     
+    
     private List<DraggableIngredient> ingredientsOnPlate = new List<DraggableIngredient>();
     private SpriteRenderer plateRenderer;
     private Color originalColor;
@@ -55,7 +56,7 @@ public class Plate : MonoBehaviour
         
         
         // Update ingredient's original position so it doesn't return to old spot
-        ingredient.SetNewOriginalPosition();
+        // ingredient.SetNewOriginalPosition();
         
         // Trigger events
         OnIngredientAdded?.Invoke(ingredient);
@@ -88,6 +89,7 @@ public class Plate : MonoBehaviour
         if (!wasEmpty && IsEmpty())
             OnPlateEmpty?.Invoke();
         
+        Debug.Log($"Removed {ingredient.name} from plate. Total ingredients: {ingredientsOnPlate.Count}");
         return true;
     }
 
@@ -212,6 +214,7 @@ public class Plate : MonoBehaviour
     public int GetIngredientCount() => ingredientsOnPlate.Count;
     public List<DraggableIngredient> GetIngredients() => new List<DraggableIngredient>(ingredientsOnPlate);
     
+    // Button to reset the dish
     public void ClearPlate()
     {
         while (ingredientsOnPlate.Count > 0)
