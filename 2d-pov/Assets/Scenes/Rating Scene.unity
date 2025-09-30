@@ -681,7 +681,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 654655723}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 93281189}
+        m_TargetAssemblyTypeName: RatingSystem, Assembly-CSharp
+        m_MethodName: SubmitDish
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &654655723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1068,7 +1080,6 @@ MonoBehaviour:
   ingredientSpacing: 0.2
   highlightEffect: {fileID: 0}
   highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  currentOrder: {fileID: 1153686461}
 --- !u!212 &1240130602
 SpriteRenderer:
   m_ObjectHideFlags: 0
