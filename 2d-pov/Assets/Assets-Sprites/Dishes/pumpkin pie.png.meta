@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 0c5a32181054fdb48a933bd6c110d5de
+guid: 007e760c68c51cc41ae9314322fd4028
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4431494890709657585
-    second: bread_0
+      213: -3688921699617638261
+    second: pumpkin pie_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -49,14 +49,14 @@ TextureImporter:
   spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 0
-  spritePivot: {x: 0.5, y: 0.5}
+  alignment: 9
+  spritePivot: {x: 0.4411619, y: 0.51672244}
   spritePixelsToUnits: 100
-  spriteBorder: {x: 264, y: 506, z: 235, w: 681}
+  spriteBorder: {x: 556, y: 808, z: 798, w: 736}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
-  spriteTessellationDetail: -1
+  spriteTessellationDetail: 0
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: bread_0
+      name: pumpkin pie_0
       rect:
         serializedVersion: 2
-        x: 267
-        y: 503
-        width: 1543
-        height: 871
+        x: 559
+        y: 801
+        width: 684
+        height: 496
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,15 +128,31 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f08da4f30ea2082c0800000000000000
-      internalID: -4431494890709657585
+      spriteID: b887f0a42415eccc0800000000000000
+      internalID: -3688921699617638261
       vertices: []
       indices: 
       edges: []
       weights: []
-    outline: []
+    outline:
+    - - {x: 220, y: -121}
+      - {x: 220, y: 254}
+      - {x: 65, y: 274}
+      - {x: -124, y: 274}
+      - {x: -465, y: -2}
+      - {x: -465, y: -153}
+      - {x: -459, y: -224}
+      - {x: -332, y: -224}
     customData: 
-    physicsShape: []
+    physicsShape:
+    - - {x: 216, y: -104}
+      - {x: 219, y: -50}
+      - {x: 219, y: 272}
+      - {x: -195, y: 272}
+      - {x: -464, y: 0}
+      - {x: -464, y: -184}
+      - {x: -463, y: -222}
+      - {x: -398, y: -222}
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
     internalID: 1537655665
@@ -148,7 +164,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      bread_0: -4431494890709657585
+      pumpkin pie_0: -3688921699617638261
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: b9981cd898a13474eaab0aee35248796
+guid: 947c43a59ad1c164784ca9833dc1dc4d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8678448789981272047
-    second: chicken_0
+      213: -3877866709460508296
+    second: croissant_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -52,7 +52,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteBorder: {x: 246, y: 575, z: 287, w: 706}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -113,23 +113,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: chicken_0
+      name: croissant_0
       rect:
         serializedVersion: 2
-        x: 324
-        y: 403
-        width: 1418
-        height: 1342
+        x: 248
+        y: 574
+        width: 1513
+        height: 766
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: fe79040b13b007870800000000000000
-      internalID: 8678448789981272047
+      spriteID: 8712b4806cc0f2ac0800000000000000
+      internalID: -3877866709460508296
       vertices: []
       indices: 
       edges: []
@@ -139,7 +139,7 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 0
+    internalID: 1537655665
     vertices: []
     indices: 
     edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      chicken_0: 8678448789981272047
+      croissant_0: -3877866709460508296
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

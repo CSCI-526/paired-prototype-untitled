@@ -1,19 +1,10 @@
 fileFormatVersion: 2
-guid: 2526add8c3507e44a92b469e4a5133df
+guid: b9981cd898a13474eaab0aee35248796
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4470592730861715767
-    second: cheese_0
-  - first:
-      213: 7447050631415436215
-    second: cheese_1
-  - first:
-      213: -8986873218232565944
-    second: cheese_2
-  - first:
-      213: -8686493229303216117
-    second: cheese_3
+      213: 8678448789981272047
+    second: chicken_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -59,9 +50,9 @@ TextureImporter:
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
-  spritePivot: {x: 0.5, y: 0.5}
+  spritePivot: {x: 0.53389347, y: 0.5343401}
   spritePixelsToUnits: 100
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteBorder: {x: 325, y: 398, z: 296, w: 299}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -122,89 +113,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: cheese_0
+      name: chicken_0
       rect:
         serializedVersion: 2
-        x: 530
-        y: 1689
-        width: 49
-        height: 43
+        x: 324
+        y: 403
+        width: 1418
+        height: 1342
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9ce3b85f89345f1c0800000000000000
-      internalID: -4470592730861715767
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: cheese_1
-      rect:
-        serializedVersion: 2
-        x: 509
-        y: 1557
-        width: 21
-        height: 22
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 7b39dd5d71d395760800000000000000
-      internalID: 7447050631415436215
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: cheese_2
-      rect:
-        serializedVersion: 2
-        x: 351
-        y: 544
-        width: 1405
-        height: 968
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 84fb6c92c66384380800000000000000
-      internalID: -8986873218232565944
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: cheese_3
-      rect:
-        serializedVersion: 2
-        x: 418
-        y: 538
-        width: 16
-        height: 13
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: b08cb835e60637780800000000000000
-      internalID: -8686493229303216117
+      spriteID: fe79040b13b007870800000000000000
+      internalID: 8678448789981272047
       vertices: []
       indices: 
       edges: []
@@ -214,7 +139,7 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 0
+    internalID: 1537655665
     vertices: []
     indices: 
     edges: []
@@ -223,10 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      cheese_0: -4470592730861715767
-      cheese_1: 7447050631415436215
-      cheese_2: -8986873218232565944
-      cheese_3: -8686493229303216117
+      chicken_0: 8678448789981272047
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

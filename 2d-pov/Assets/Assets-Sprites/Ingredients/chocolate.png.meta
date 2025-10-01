@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 63f0d821d0089014089700cf73ce95f6
+guid: 553f696b9e33a4045b45c810c4f4a4a9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6657839069457581439
-    second: cheesy fries_0
+      213: -5209720356119618007
+    second: chocolate_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -50,9 +50,9 @@ TextureImporter:
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
-  spritePivot: {x: 0.5, y: 0.5}
+  spritePivot: {x: 0.43893144, y: 0.57716095}
   spritePixelsToUnits: 100
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteBorder: {x: 334, y: 825, z: 538, w: 583}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -113,23 +113,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: cheesy fries_0
+      name: chocolate_0
       rect:
         serializedVersion: 2
-        x: 566
-        y: 841
-        width: 728
-        height: 794
+        x: 331
+        y: 824
+        width: 1177
+        height: 640
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f758cb2eb55656c50800000000000000
-      internalID: 6657839069457581439
+      spriteID: 92e5e5a30fa53b7b0800000000000000
+      internalID: -5209720356119618007
       vertices: []
       indices: 
       edges: []
@@ -139,7 +139,7 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 0
+    internalID: 1537655665
     vertices: []
     indices: 
     edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      cheesy fries_0: 6657839069457581439
+      chocolate_0: -5209720356119618007
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

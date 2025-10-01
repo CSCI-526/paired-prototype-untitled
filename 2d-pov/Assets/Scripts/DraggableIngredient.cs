@@ -3,14 +3,13 @@ using UnityEngine;
 public class DraggableIngredient : MonoBehaviour
 {
     [Header("Drag Settings")]
-    public LayerMask plateLayerMask = -1; // What layers count as valid drop zones
+    public LayerMask plateLayerMask = -1; // Layer mask to identify plates
     public float dragOffset = 0.1f; // How far in front of camera to place while dragging
     
     private Camera mainCamera;
     private Vector3 originalPosition;
     private bool isDragging = false;
     private Collider2D col2D;
-    private Rigidbody2D rb2D;
     private int originalSortingOrder;
     private SpriteRenderer spriteRenderer;
     
@@ -23,11 +22,10 @@ public class DraggableIngredient : MonoBehaviour
     {
         mainCamera = Camera.main;
         if (mainCamera == null)
-            mainCamera = FindObjectOfType<Camera>();
+            mainCamera = FindAnyObjectByType<Camera>();
             
         originalPosition = transform.position;
         col2D = GetComponent<Collider2D>();
-        rb2D = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         
         if (spriteRenderer != null)
@@ -64,10 +62,6 @@ public class DraggableIngredient : MonoBehaviour
     void StartDragging()
     {
         isDragging = true;
-        
-        // Disable physics while dragging
-        if (rb2D != null)
-            rb2D.isKinematic = true;
             
         // Bring to front while dragging
         if (spriteRenderer != null)
@@ -79,10 +73,7 @@ public class DraggableIngredient : MonoBehaviour
     void StopDragging()
     {
         isDragging = false;
-        
-        // Re-enable physics
-        if (rb2D != null)
-            rb2D.isKinematic = false;
+
             
         // Reset sorting order
         if (spriteRenderer != null)
@@ -90,7 +81,7 @@ public class DraggableIngredient : MonoBehaviour
         
         // Check if we're over a valid drop zone
         Plate plateBelow = GetPlateBelow();
-        
+
         if (plateBelow != null)
         {
             // Successfully dropped on plate
@@ -163,10 +154,9 @@ public class DraggableIngredient : MonoBehaviour
         originalPosition = transform.position;
     }
     
-    // Disable dragging (useful for ingredients already on plate)
-    public void DisableDragging()
+    public Vector3 GetOriginalPosition()
     {
-        enabled = false;
+        return originalPosition;
     }
     
     public void EnableDragging()
