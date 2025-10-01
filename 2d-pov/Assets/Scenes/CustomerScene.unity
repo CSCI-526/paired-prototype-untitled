@@ -408,10 +408,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TypewriterEffect
   dialogueText: {fileID: 500093058}
-  fullText: 
   typeSpeed: 0.05
-  foodImage: {fileID: 0}
-  acceptButton: {fileID: 0}
+  foodImage: {fileID: 2107689791}
+  goToKitchenButton: {fileID: 768738384}
 --- !u!1 &741284822
 GameObject:
   m_ObjectHideFlags: 0

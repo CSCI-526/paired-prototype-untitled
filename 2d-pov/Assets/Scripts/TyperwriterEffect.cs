@@ -4,8 +4,7 @@ using System.Collections;
 
 public class TypewriterEffect : MonoBehaviour
 {
-    public TextMeshProUGUI dialogueText;
-    //[TextArea] public string fullText;
+    public TextMeshProUGUI dialogueText; 
     public float typeSpeed = 0.05f;
     public GameObject foodImage;
     public GameObject goToKitchenButton;
@@ -17,15 +16,9 @@ public class TypewriterEffect : MonoBehaviour
     // Hide the food image and go to kitchen button initially
     foodImage.SetActive(false);
     goToKitchenButton.SetActive(false);
-
-    Debug.Log("Before ForceMeshUpdate - text: " + dialogueText.text);
-    Debug.Log("Before ForceMeshUpdate - characterCount: " + dialogueText.textInfo.characterCount);
-    
+ 
     dialogueText.ForceMeshUpdate();
-    
-    Debug.Log("After ForceMeshUpdate - text: " + dialogueText.text);
-    Debug.Log("After ForceMeshUpdate - characterCount: " + dialogueText.textInfo.characterCount);
-
+      
     StartCoroutine(ShowText()); 
     }
 
@@ -34,6 +27,7 @@ public class TypewriterEffect : MonoBehaviour
     {
         TMP_TextInfo textInfo = dialogueText.textInfo;
         int totalVisibleCharacters = textInfo.characterCount;
+        Debug.Log("totalVisibleCharacters: " + totalVisibleCharacters);
         int counter = 0;
 
         StartCoroutine(DetectSkip());
@@ -50,14 +44,14 @@ public class TypewriterEffect : MonoBehaviour
             counter++;
             
             yield return new WaitForSeconds(typeSpeed);
-        }
-        //Debug.Log('fullText:' + fullText);
+        } 
         yield return new WaitForSeconds(0.5f);
         foodImage.SetActive(true);
         yield return new WaitForSeconds(0.5f);
         goToKitchenButton.SetActive(true);
     }
 
+    // Detect if the user clicks the mouse button to skip the text
     IEnumerator DetectSkip()
     {
         while (!skip)
