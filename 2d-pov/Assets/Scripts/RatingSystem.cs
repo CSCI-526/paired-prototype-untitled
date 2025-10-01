@@ -29,40 +29,42 @@ public class RatingSystem : MonoBehaviour
             return 1;
         }
 
-        if (orderDish.requiredIngredients.Count == 0)
+        // // Get ingredient names from the plate
+        // List<string> plateIngredients = new List<string>(playerPlate.GetIngredientNames());
+        // List<string> orderDishes = new List<string>(orderDish.dishes);
+
+        // // Check if counts match
+        // if (plateIngredients.Count != orderDishes.Count)
+        // {
+        //     Debug.Log("Wrong number of ingredients!");
+        //     return 1;
+        // }
+
+        // // Sort both lists for comparison
+        // plateIngredients.Sort();
+        // orderDishes.Sort();
+
+        // // Check if all ingredients match
+        // for (int i = 0; i < plateIngredients.Count; i++)
+        // {
+        //     if (plateIngredients[i] != orderDishes[i])
+        //     {
+        //         Debug.Log("Ingredient mismatch: Expected " + orderDishes[i] + " but got " + plateIngredients[i]);
+        //         return 1;
+        //     }
+        // }
+
+        // check if the child component game object under playerPlate has the same dishName as one of the orderDish.dishes
+        string plateDishName = playerPlate.getDishName();
+        string orderDishName = orderDish.orderName;
+
+        if (plateDishName == orderDishName)
         {
-            Debug.LogWarning("Order has no required ingredients!");
-            return 1;
+            Debug.Log("Dish names match!");
+            return 5;
         }
 
-        // Get ingredient names from the plate
-        List<string> plateIngredients = new List<string>(playerPlate.GetIngredientNames());
-        List<string> requiredIngredients = new List<string>(orderDish.requiredIngredients);
-
-        // Check if counts match
-        if (plateIngredients.Count != requiredIngredients.Count)
-        {
-            Debug.Log("Wrong number of ingredients!");
-            return 1;
-        }
-
-        // Sort both lists for comparison
-        plateIngredients.Sort();
-        requiredIngredients.Sort();
-
-        // Check if all ingredients match
-        for (int i = 0; i < plateIngredients.Count; i++)
-        {
-            if (plateIngredients[i] != requiredIngredients[i])
-            {
-                Debug.Log("Ingredient mismatch: Expected " + requiredIngredients[i] + " but got " + plateIngredients[i]);
-                return 1;
-            }
-        }
-
-        // Perfect match!
-        Debug.Log("Perfect match!");
-        return 5;
+        return 10; // Partial match
     }
 
     void DisplayStars(int stars)

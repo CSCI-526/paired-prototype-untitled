@@ -1,10 +1,10 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 public class OrderDish : MonoBehaviour
 {
-    public List<string> requiredIngredients = new List<string>();
-
+    [Header("Order Details")]
+    public string orderName; // Name of the dish ordered
+    public string orderID; // ID of the dish ordered
     void Start()
     {
         

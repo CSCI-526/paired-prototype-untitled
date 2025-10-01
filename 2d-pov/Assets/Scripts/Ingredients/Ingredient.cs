@@ -25,4 +25,10 @@ public class Ingredient : MonoBehaviour
             }
         }
     }
+
+    public string getIngredientName
+    {
+        get { return ingredientData.ingredientName; }   
+    }
+    
 }
