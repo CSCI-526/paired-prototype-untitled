@@ -25,7 +25,7 @@ public class DialogueManager : MonoBehaviour
     private HashSet<int> usedIds = new HashSet<int>();
 
     //Load dialogue data when start
-    void Start()
+    void Awake()
     {
         LoadDialogues();
 
