@@ -12,6 +12,8 @@ public class Recipe : ScriptableObject
     public List<string> requiredIngredients = new List<string>();
     public GameObject dishPrefab; // The final food item to spawn
 
+    public Sprite icon;
+
     // Check if the given ingredients match this recipe
     public bool MatchesIngredients(List<string> ingredients)
     {
