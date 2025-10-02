@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f02e6298a668194d95cac2858859f8d, type: 3}
   m_Name: ChickenSandwich
   m_EditorClassIdentifier: Assembly-CSharp::Recipe
-  dishName: Chicken
+  dishName: ' Chicken Sandwich'
   ID: 5
   requiredIngredients: []
   dishPrefab: {fileID: 5537902939462073213, guid: 4b80324d224924758b18633bfe69f92f, type: 3}

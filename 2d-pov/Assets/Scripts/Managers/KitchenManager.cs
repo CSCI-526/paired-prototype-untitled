@@ -22,7 +22,7 @@ public class KitchenManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Invalid Dish ID: " + currentDishId + 
+            Debug.LogError("Invalid Dish ID: " + currentDishId +
                            ". Make sure the ID is within the range of the dishPrefabs array size.");
         }
     }
