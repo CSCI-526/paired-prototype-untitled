@@ -10,11 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8f02e6298a668194d95cac2858859f8d, type: 3}
-  m_Name: CarrotCake
+  m_Name: Salad
   m_EditorClassIdentifier: Assembly-CSharp::Recipe
-  dishName: CarrotCake
-  ID: 0
-  requiredIngredients:
-  - Carrot
-  - Bread
-  dishPrefab: {fileID: 4071129827088621196, guid: 5c60355f8fc635644abce483dab228d5, type: 3}
+  dishName: Salad
+  ID: 4
+  requiredIngredients: []
+  dishPrefab: {fileID: 4612916372687549598, guid: 08fa64ca566014cba8b56d24a6fee5a6, type: 3}
