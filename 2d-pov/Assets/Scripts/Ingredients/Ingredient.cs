@@ -3,7 +3,6 @@ using UnityEngine;
 
 [ExecuteInEditMode] // run in edit mode to update visuals
 [RequireComponent(typeof(SpriteRenderer))] // ensure there's a SpriteRenderer
-// [RequireComponent(typeof(PolygonCollider2D))] // ensure there's a Collider2D
 public class Ingredient : MonoBehaviour
 {
     public IngredientData ingredientData;

@@ -7,13 +7,6 @@ public class CombinationSystem : MonoBehaviour
     public Transform plate; // Reference to the Plate/Dish GameObject
     public List<Recipe> allRecipes = new List<Recipe>(); // Assign in Inspector
 
-    void Update()
-    {
-        // Optional: Auto-check for combinations every frame
-        // You might want to call this only when ingredients are added instead
-        // CheckForCombinations();
-    }
-
     // Call this whenever ingredients are added to the plate
     public void CheckForCombinations()
     {

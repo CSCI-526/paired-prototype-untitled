@@ -74,7 +74,6 @@ public class DraggableIngredient : MonoBehaviour
     {
         isDragging = false;
 
-            
         // Reset sorting order
         if (spriteRenderer != null)
             spriteRenderer.sortingOrder = originalSortingOrder;

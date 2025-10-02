@@ -1,16 +1,7 @@
 using UnityEngine;
-
+using System.Collections.Generic;
 public class Dish : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public Recipe recipe; // The recipe this dish corresponds to
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
