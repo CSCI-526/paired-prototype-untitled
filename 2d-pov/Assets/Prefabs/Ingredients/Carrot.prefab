@@ -81,7 +81,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: b1b8e51673d5b5b4989be67377d17cdb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -191,9 +191,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DraggableIngredient
   plateLayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 8
   dragOffset: 0.1
-  enableDebugLogs: 1
+  enableDebugLogs: 0
   hoverColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!114 &8304786401651748134
 MonoBehaviour:

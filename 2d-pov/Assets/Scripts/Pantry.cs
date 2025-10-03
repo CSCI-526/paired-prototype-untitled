@@ -4,87 +4,136 @@ public class Pantry : MonoBehaviour
 {
     [Header("Pantry Settings")]
     public bool enableDebugLogs = true;
-    
+
     [Header("Ingredient Prefabs")]
     public GameObject[] ingredientPrefabs; // Array of prefabs to assign to slots
 
-    // private void Start()
-    // {
-    //     SetupPantrySlots();
-    // }
+    [Header("Layout Settings")]
+    public float spacing = 1.5f; // Space between slots
+    public bool horizontal = true; // true = horizontal row, false = vertical column
+    
+    [Header("Auto-Setup")]
+    public bool autoCreateSlots = true;
+    
+    private PantrySlot[] slots;
 
-    // void SetupPantrySlots()
-    // {
-    //     PantrySlot[] slots = GetComponentsInChildren<PantrySlot>();
+    void Start()
+    {
+        if (autoCreateSlots)
+        {
+            CreateSlots();
+        }
+        else
+        {
+            slots = GetComponentsInChildren<PantrySlot>();
+            AssignPrefabsToSlots();
+        }
         
-    //     if (enableDebugLogs)
-    //         Debug.Log($"[Pantry] Found {slots.Length} PantrySlots");
+        SpawnInitialIngredients();
+    }
 
-    //     // Ensure every child has a PantrySlot attached
-    //     foreach (Transform child in transform)
-    //     {
-    //         PantrySlot slot = child.GetComponent<PantrySlot>();
-    //         if (slot == null)
-    //         {
-    //             slot = child.gameObject.AddComponent<PantrySlot>();
-    //             if (enableDebugLogs)
-    //                 Debug.Log($"[Pantry] Added PantrySlot to {child.name}");
-    //         }
+    void CreateSlots()
+    {
+        // Clear existing auto-created slots
+        foreach (Transform child in transform)
+        {
+            if (child.GetComponent<PantrySlot>() != null && child.name.Contains("PantrySlot_"))
+                Destroy(child.gameObject);
+        }
+
+        slots = new PantrySlot[ingredientPrefabs.Length];
+
+        // Calculate centered starting position
+        float totalSize = (ingredientPrefabs.Length - 1) * spacing;
+        float startPos = -totalSize * 0.5f;
+
+        for (int i = 0; i < ingredientPrefabs.Length; i++)
+        {
+            // Create slot
+            GameObject slotObj = new GameObject($"PantrySlot_{i}");
+            slotObj.transform.SetParent(transform);
             
-    //         slot.SetPantry(this);
-    //     }
-        
-    //     // Auto-assign prefabs to slots if they don't have them
-    //     AssignPrefabsToSlots();
-    // }
-    
-    // void AssignPrefabsToSlots()
-    // {
-    //     if (ingredientPrefabs == null || ingredientPrefabs.Length == 0)
-    //     {
-    //         if (enableDebugLogs)
-    //             Debug.LogWarning("[Pantry] No ingredient prefabs assigned!");
-    //         return;
-    //     }
-        
-    //     PantrySlot[] slots = GetComponentsInChildren<PantrySlot>();
-        
-    //     for (int i = 0; i < slots.Length; i++)
-    //     {
-    //         // Only assign if slot doesn't already have a prefab
-    //         if (slots[i].ingredientPrefab == null)
-    //         {
-    //             // Cycle through prefabs if we have more slots than prefabs
-    //             int prefabIndex = i % ingredientPrefabs.Length;
-    //             slots[i].SetIngredientPrefab(ingredientPrefabs[prefabIndex]);
+            // Position slot
+            Vector3 localPos = Vector3.zero;
+            if (horizontal)
+                localPos.x = startPos + (i * spacing);
+            else
+                localPos.y = startPos + (i * spacing);
                 
-    //             if (enableDebugLogs)
-    //                 Debug.Log($"[Pantry] Assigned {ingredientPrefabs[prefabIndex].name} to slot {slots[i].name}");
-    //         }
-    //     }
-    // }
+            slotObj.transform.localPosition = localPos;
+            
+            // Add PantrySlot component
+            PantrySlot slot = slotObj.AddComponent<PantrySlot>();
+            slot.ingredientPrefab = ingredientPrefabs[i];
+            slot.Initialize(this);
+            
+            slots[i] = slot;
+        }
 
-    // /// <summary>
-    // /// Called by PantrySlot when its ingredient is destroyed.
-    // /// </summary>
-    // public void RespawnIngredient(GameObject prefab, Vector3 position, Transform parentSlot)
-    // {
-    //     GameObject newIngredient = Instantiate(prefab, position, Quaternion.identity, parentSlot);
+        if (enableDebugLogs)
+            Debug.Log($"[Pantry] Created {slots.Length} slots");
+    }
 
-    //     // Reattach PantrySlot watcher
-    //     PantrySlot slot = parentSlot.GetComponent<PantrySlot>();
-    //     if (slot != null) slot.SetCurrentIngredient(newIngredient);
+    void AssignPrefabsToSlots()
+    {
+        for (int i = 0; i < Mathf.Min(slots.Length, ingredientPrefabs.Length); i++)
+        {
+            slots[i].ingredientPrefab = ingredientPrefabs[i];
+            slots[i].Initialize(this);
+        }
+    }
 
-    //     if (enableDebugLogs)
-    //         Debug.Log($"[Pantry] Respawned {prefab.name} at {position}");
-    // }
-    
-    // /// <summary>
-    // /// Manually refresh all slots (useful for testing)
-    // /// </summary>
-    // [ContextMenu("Refresh Pantry Slots")]
-    // public void RefreshSlots()
-    // {
-    //     SetupPantrySlots();
-    // }
+    void SpawnInitialIngredients()
+    {
+        if (slots == null) return;
+
+        foreach (PantrySlot slot in slots)
+        {
+            slot.SpawnIngredient();
+        }
+    }
+
+    public void OnIngredientDragged(PantrySlot slot)
+    {
+        if (enableDebugLogs)
+            Debug.Log($"[Pantry] Ingredient dragged from {slot.name}, respawning");
+        
+        slot.SpawnIngredient();
+    }
+
+    public void RefreshAllSlots()
+    {
+        if (slots == null) return;
+        
+        foreach (PantrySlot slot in slots)
+        {
+            slot.ClearIngredient();
+            slot.SpawnIngredient();
+        }
+    }
+
+    // Visualize layout in editor
+    void OnDrawGizmosSelected()
+    {
+        if (ingredientPrefabs == null || ingredientPrefabs.Length == 0)
+            return;
+
+        Gizmos.color = Color.cyan;
+        
+        float totalSize = (ingredientPrefabs.Length - 1) * spacing;
+        float startPos = -totalSize * 0.5f;
+        
+        for (int i = 0; i < ingredientPrefabs.Length; i++)
+        {
+            Vector3 localPos = Vector3.zero;
+            if (horizontal)
+                localPos.x = startPos + (i * spacing);
+            else
+                localPos.y = startPos + (i * spacing);
+                
+            Vector3 worldPos = transform.TransformPoint(localPos);
+            Gizmos.DrawWireSphere(worldPos, 0.3f);
+        }
+    }
+
 }

@@ -7,72 +7,109 @@ public class PantrySlot : MonoBehaviour
     
     private Pantry pantry;
     private GameObject currentIngredient;
+    private DraggableIngredient draggableComponent;
 
-    // private void Start()
-    // {
-    //     // Find pantry if not set
-    //     if (pantry == null)
-    //         pantry = GetComponentInParent<Pantry>();
-            
-    //     // Spawn initial ingredient if we have a prefab
-    //     if (ingredientPrefab != null && currentIngredient == null)
-    //     {
-    //         SpawnIngredient();
-    //     }
-    // }
+    public void Initialize(Pantry parentPantry)
+    {
+        pantry = parentPantry;
+    }
 
-    // public void SetPantry(Pantry pantryRef)
-    // {
-    //     pantry = pantryRef;
-    // }
+    public void SpawnIngredient()
+    {
+        // Don't spawn if we already have an ingredient
+        if (currentIngredient != null)
+        {
+            Debug.LogWarning($"[{name}] Already has an ingredient, skipping spawn");
+            return;
+        }
 
-    // public void SetCurrentIngredient(GameObject ingredient)
-    // {
-    //     currentIngredient = ingredient;
-    // }
-    
-    // public void SetIngredientPrefab(GameObject prefab)
-    // {
-    //     ingredientPrefab = prefab;
-    // }
+        if (ingredientPrefab == null)
+        {
+            Debug.LogError($"[{name}] No ingredient prefab assigned!");
+            return;
+        }
 
-    // void SpawnIngredient()
-    // {
-    //     if (ingredientPrefab != null && pantry != null)
-    //     {
-    //         // Validate position before spawning
-    //         Vector3 spawnPosition = transform.position;
-            
-    //         // Check for invalid values
-    //         if (!IsValidPosition(spawnPosition))
-    //         {
-    //             Debug.LogError($"[PantrySlot] Invalid spawn position detected: {spawnPosition}. Using Vector3.zero instead.");
-    //             spawnPosition = Vector3.zero;
-    //         }
-            
-    //         currentIngredient = Instantiate(ingredientPrefab, spawnPosition, Quaternion.identity, transform);
-            
-    //         if (pantry.enableDebugLogs)
-    //             Debug.Log($"[PantrySlot] Spawned {ingredientPrefab.name} in slot {gameObject.name} at position {spawnPosition}");
-    //     }
-    // }
-    
-    // bool IsValidPosition(Vector3 position)
-    // {
-    //     return !float.IsNaN(position.x) && !float.IsNaN(position.y) && !float.IsNaN(position.z) &&
-    //            !float.IsInfinity(position.x) && !float.IsInfinity(position.y) && !float.IsInfinity(position.z) &&
-    //            Mathf.Abs(position.x) < 1000000f && Mathf.Abs(position.y) < 1000000f && Mathf.Abs(position.z) < 1000000f;
-    // }
+        // Instantiate the ingredient at this slot's position
+        currentIngredient = Instantiate(ingredientPrefab, transform.position, Quaternion.identity);
+        currentIngredient.transform.SetParent(transform); // Optional: parent to slot for organization
+        
+        // Get or add DraggableIngredient component
+        draggableComponent = currentIngredient.GetComponent<DraggableIngredient>();
+        if (draggableComponent == null)
+        {
+            draggableComponent = currentIngredient.AddComponent<DraggableIngredient>();
+        }
 
-    // private void OnTransformChildrenChanged()
-    // {
-    //     // Check if ingredient got deleted/removed
-    //     if (currentIngredient == null && transform.childCount == 0 && ingredientPrefab != null)
-    //     {
-    //         if (pantry != null && pantry.enableDebugLogs)
-    //             Debug.Log($"[PantrySlot] Ingredient missing, respawning {ingredientPrefab.name}");
-                
-    //         SpawnIngredient();
-    //     }
-    // }
+        // Set the original position to this slot's world position
+        draggableComponent.SetNewOriginalPosition();
+
+        // Subscribe to drag events
+        draggableComponent.OnStartDrag += OnIngredientStartDrag;
+        draggableComponent.OnDroppedOnPlate += OnIngredientDroppedOnPlate;
+
+        if (pantry != null && pantry.enableDebugLogs)
+        {
+            Debug.Log($"[{name}] Spawned ingredient: {currentIngredient.name}");
+        }
+    }
+
+    void OnIngredientStartDrag(DraggableIngredient ingredient)
+    {
+        // Unparent from slot so it can move freely
+        if (currentIngredient != null)
+        {
+            currentIngredient.transform.SetParent(null);
+        }
+
+        if (pantry != null && pantry.enableDebugLogs)
+        {
+            Debug.Log($"[{name}] Ingredient started dragging");
+        }
+    }
+
+    void OnIngredientDroppedOnPlate(DraggableIngredient ingredient, Plate plate)
+    {
+        // Ingredient was successfully placed on a plate
+        // Clean up our reference and notify pantry to respawn
+        CleanupIngredient();
+        
+        if (pantry != null)
+        {
+            pantry.OnIngredientDragged(this);
+        }
+    }
+
+    void CleanupIngredient()
+    {
+        if (draggableComponent != null)
+        {
+            draggableComponent.OnStartDrag -= OnIngredientStartDrag;
+            draggableComponent.OnDroppedOnPlate -= OnIngredientDroppedOnPlate;
+        }
+
+        currentIngredient = null;
+        draggableComponent = null;
+    }
+
+    public void ClearIngredient()
+    {
+        if (currentIngredient != null)
+        {
+            CleanupIngredient();
+            Destroy(currentIngredient);
+        }
+    }
+
+    void OnDestroy()
+    {
+        // Clean up event subscriptions
+        CleanupIngredient();
+    }
+
+    // Visualize slot position in editor
+    void OnDrawGizmos()
+    {
+        Gizmos.color = currentIngredient != null ? Color.green : Color.red;
+        Gizmos.DrawWireCube(transform.position, Vector3.one * 0.5f);
+    }
 }

@@ -5,7 +5,7 @@ public class Plate : MonoBehaviour
 {
     [Header("Plate Settings")]
     public Transform ingredientParent; // Where ingredients will be parented (optional)
-    public float maxIngredients = 10f;
+    public float maxIngredients = 100f;
     public bool allowDuplicates = true;
     public float ingredientSpacing = 0.2f;
     public CombinationSystem comboSystem;

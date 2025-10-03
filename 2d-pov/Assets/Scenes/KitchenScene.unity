@@ -1371,6 +1371,7 @@ GameObject:
   - component: {fileID: 766984980}
   - component: {fileID: 766984982}
   - component: {fileID: 766984983}
+  - component: {fileID: 766984984}
   m_Layer: 0
   m_Name: Pantry
   m_TagString: Untagged
@@ -1481,6 +1482,77 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &766984984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 766984979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1ac67c5bb16ed54692e5622baef7f2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pantry
+  enableDebugLogs: 0
+  ingredientPrefabs:
+  - {fileID: 4828922072816650307, guid: 0459882a2dd0df745bdc5df70e69cc8b, type: 3}
+  - {fileID: 5268278291036711262, guid: d4251bff851625448b38128fcfb941e8, type: 3}
+  - {fileID: 5019135914713170762, guid: 982af6c00a30c594faf8f01bfd0273f3, type: 3}
+  - {fileID: 7448852694630630562, guid: 8df517cb042e14044be1f22b3ac1088e, type: 3}
+  - {fileID: 2445644261294012018, guid: e6c595edf34a0464aae934a7fc5154f8, type: 3}
+  - {fileID: 992363892594901227, guid: 86bce0e450bdd5440bb029d50f4bc3c3, type: 3}
+  - {fileID: 1678815630160733816, guid: 5826382499d860140a7f3587a6a63cd2, type: 3}
+  - {fileID: 1479273608746904182, guid: a75d4433fd727174f8d716d4d54fcd78, type: 3}
+  - {fileID: 970125862268031060, guid: 8a77a3ea405ef63429cbe2e12480c758, type: 3}
+  - {fileID: 5156532205671184655, guid: 951910a120cf94a4fbc685f0899df0f1, type: 3}
+  spacing: 0.1
+  horizontal: 1
+  autoCreateSlots: 1
+--- !u!1 &825791941
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 825791943}
+  - component: {fileID: 825791942}
+  m_Layer: 0
+  m_Name: Exit
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &825791942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 825791941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db60f5f8260977348bb3f827af017ac6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+--- !u!4 &825791943
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 825791941}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.52241, y: -2.14402, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &866662990
 GameObject:
   m_ObjectHideFlags: 0
@@ -3167,7 +3239,7 @@ GameObject:
   - component: {fileID: 1707233812}
   - component: {fileID: 1707233811}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Order Ready
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3190,7 +3262,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -300, y: -189.7}
+  m_AnchoredPosition: {x: -300, y: -179}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1707233811
@@ -3457,7 +3529,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -381.8, y: 171.7}
+  m_AnchoredPosition: {x: -397, y: 166}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2007810294
@@ -3507,8 +3579,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 18
+  m_fontSizeBase: 18
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3744,3 +3816,4 @@ SceneRoots:
   - {fileID: 501283565}
   - {fileID: 656464348}
   - {fileID: 1606606574}
+  - {fileID: 825791943}
