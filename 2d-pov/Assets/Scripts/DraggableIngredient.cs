@@ -6,12 +6,19 @@ public class DraggableIngredient : MonoBehaviour
     public LayerMask plateLayerMask = -1; // Layer mask to identify plates
     public float dragOffset = 0.1f; // How far in front of camera to place while dragging
     
+    [Header("Debug Settings")]
+    public bool enableDebugLogs = true;
+    public Color hoverColor = Color.yellow;
+    
     private Camera mainCamera;
     private Vector3 originalPosition;
+    private Vector3 mouseOffset; // Offset between mouse and object when dragging starts
     private bool isDragging = false;
+    private bool isHovering = false;
     private Collider2D col2D;
     private int originalSortingOrder;
     private SpriteRenderer spriteRenderer;
+    private Color originalColor;
     
     // Events for other systems to hook into
     public System.Action<DraggableIngredient> OnStartDrag;
@@ -29,12 +36,45 @@ public class DraggableIngredient : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         
         if (spriteRenderer != null)
+        {
             originalSortingOrder = spriteRenderer.sortingOrder;
+            originalColor = spriteRenderer.color;
+        }
+        
+        if (enableDebugLogs)
+        {
+            Debug.Log($"[{gameObject.name}] DraggableIngredient initialized. Camera: {(mainCamera != null ? mainCamera.name : "NULL")}, Collider: {(col2D != null ? "Found" : "NULL")}, SpriteRenderer: {(spriteRenderer != null ? "Found" : "NULL")}");
+        }
+    }
+
+    void Update()
+    {
+        // Debug mouse position continuously (can be disabled via enableDebugLogs)
+        if (enableDebugLogs && Input.GetMouseButtonDown(0))
+        {
+            Vector3 mouseWorldPos = GetMouseWorldPosition();
+            Debug.Log($"[MOUSE DEBUG] Screen: {Input.mousePosition}, World: {mouseWorldPos}");
+        }
     }
 
     void OnMouseDown()
     {
         if (!enabled) return;
+        
+        if (enableDebugLogs)
+        {
+            Debug.Log($"[{gameObject.name}] OnMouseDown triggered!");
+        }
+        
+        // Calculate the offset between mouse position and object position
+        Vector3 mouseWorldPos = GetMouseWorldPosition();
+        mouseWorldPos.z = transform.position.z;
+        mouseOffset = transform.position - mouseWorldPos;
+        
+        if (enableDebugLogs)
+        {
+            Debug.Log($"[{gameObject.name}] Mouse World Pos: {mouseWorldPos}, Object Pos: {transform.position}, Offset: {mouseOffset}");
+        }
         
         StartDragging();
     }
@@ -43,20 +83,63 @@ public class DraggableIngredient : MonoBehaviour
     {
         if (!isDragging) return;
         
-        Vector3 mousePos = Input.mousePosition;
-        mousePos.z = mainCamera.nearClipPlane + dragOffset;
-        Vector3 worldPos = mainCamera.ScreenToWorldPoint(mousePos);
+        // Get mouse position in world coordinates and apply the offset
+        Vector3 mouseWorldPos = GetMouseWorldPosition();
+        mouseWorldPos.z = transform.position.z;
         
-        // For 2D games, keep the Z position consistent
-        worldPos.z = transform.position.z;
-        transform.position = worldPos;
+        // Apply the offset so the object doesn't jump to mouse position
+        Vector3 newPosition = mouseWorldPos + mouseOffset;
+        transform.position = newPosition;
+        
+        if (enableDebugLogs)
+        {
+            Debug.Log($"[{gameObject.name}] Dragging - Mouse: {mouseWorldPos}, New Pos: {newPosition}");
+        }
     }
 
     void OnMouseUp()
     {
         if (!isDragging) return;
         
+        if (enableDebugLogs)
+        {
+            Debug.Log($"[{gameObject.name}] OnMouseUp triggered!");
+        }
+        
         StopDragging();
+    }
+
+    void OnMouseEnter()
+    {
+        if (!enabled) return;
+        
+        isHovering = true;
+        if (spriteRenderer != null && !isDragging)
+        {
+            spriteRenderer.color = hoverColor;
+        }
+        
+        if (enableDebugLogs)
+        {
+            Vector3 mouseWorldPos = GetMouseWorldPosition();
+            Debug.Log($"[{gameObject.name}] Mouse ENTERED - Mouse World Pos: {mouseWorldPos}, Object Pos: {transform.position}");
+        }
+    }
+
+    void OnMouseExit()
+    {
+        if (!enabled) return;
+        
+        isHovering = false;
+        if (spriteRenderer != null && !isDragging)
+        {
+            spriteRenderer.color = originalColor;
+        }
+        
+        if (enableDebugLogs)
+        {
+            Debug.Log($"[{gameObject.name}] Mouse EXITED");
+        }
     }
 
     void StartDragging()
@@ -65,7 +148,16 @@ public class DraggableIngredient : MonoBehaviour
             
         // Bring to front while dragging
         if (spriteRenderer != null)
+        {
             spriteRenderer.sortingOrder = 100;
+            // Keep hover color while dragging
+            spriteRenderer.color = hoverColor;
+        }
+        
+        if (enableDebugLogs)
+        {
+            Debug.Log($"[{gameObject.name}] Started dragging!");
+        }
             
         OnStartDrag?.Invoke(this);
     }
@@ -74,9 +166,18 @@ public class DraggableIngredient : MonoBehaviour
     {
         isDragging = false;
 
-        // Reset sorting order
+        // Reset sorting order and color
         if (spriteRenderer != null)
+        {
             spriteRenderer.sortingOrder = originalSortingOrder;
+            // Reset to original color unless still hovering
+            spriteRenderer.color = isHovering ? hoverColor : originalColor;
+        }
+        
+        if (enableDebugLogs)
+        {
+            Debug.Log($"[{gameObject.name}] Stopped dragging!");
+        }
         
         // Check if we're over a valid drop zone
         Plate plateBelow = GetPlateBelow();
@@ -84,16 +185,74 @@ public class DraggableIngredient : MonoBehaviour
         if (plateBelow != null)
         {
             // Successfully dropped on plate
+            if (enableDebugLogs)
+            {
+                Debug.Log($"[{gameObject.name}] Dropped on plate: {plateBelow.name}");
+            }
             plateBelow.AddIngredient(this);
             OnDroppedOnPlate?.Invoke(this, plateBelow);
         }
         else
         {
             // Return to original position if not dropped on plate
+            if (enableDebugLogs)
+            {
+                Debug.Log($"[{gameObject.name}] No plate found, returning to original position");
+            }
             ReturnToOriginalPosition();
         }
         
         OnEndDrag?.Invoke(this);
+    }
+    
+    Vector3 GetMouseWorldPosition()
+    {
+        Vector3 mousePos = Input.mousePosition;
+        
+        if (enableDebugLogs)
+        {
+            Debug.Log($"[{gameObject.name}] Raw Mouse Position: {mousePos}");
+        }
+        
+        // Check if we're using a Canvas in World Space
+        Canvas canvas = GetComponentInParent<Canvas>();
+        if (canvas != null && canvas.renderMode == RenderMode.WorldSpace)
+        {
+            if (enableDebugLogs)
+            {
+                Debug.Log($"[{gameObject.name}] Using World Space Canvas: {canvas.name}");
+            }
+            
+            // For World Space Canvas, we need to account for the canvas transform
+            RectTransform canvasRect = canvas.GetComponent<RectTransform>();
+            Vector2 localPoint;
+            
+            // Convert screen point to local point on the canvas
+            if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                canvasRect, mousePos, mainCamera, out localPoint))
+            {
+                // Convert local canvas point to world position
+                Vector3 worldPos = canvasRect.TransformPoint(localPoint);
+                
+                if (enableDebugLogs)
+                {
+                    Debug.Log($"[{gameObject.name}] Canvas Local Point: {localPoint}, World Pos: {worldPos}");
+                }
+                
+                return worldPos;
+            }
+        }
+        
+        // Fallback to standard screen-to-world conversion for non-Canvas objects
+        mousePos.z = mainCamera.nearClipPlane + dragOffset;
+        Vector3 fallbackWorldPos = mainCamera.ScreenToWorldPoint(mousePos);
+        
+        if (enableDebugLogs)
+        {
+            Debug.Log($"[{gameObject.name}] Using fallback ScreenToWorldPoint: {fallbackWorldPos}");
+        }
+        
+        return fallbackWorldPos;
     }
 
     Plate GetPlateBelow()

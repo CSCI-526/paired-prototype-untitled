@@ -20,7 +20,7 @@ public class CombinationSystem : MonoBehaviour
             if (ing != null)
             {
                 ingredientObjects.Add(child.gameObject);
-                string name = ing.getIngredientName;
+                string name = ing.IngredientName;
                 ingredientNames.Add(name);
             }
         }
@@ -78,7 +78,7 @@ public class CombinationSystem : MonoBehaviour
             if (ing != null)
             {
                 ingredientObjects.Add(child.gameObject);
-                ingredientNames.Add(ing.getIngredientName);
+                ingredientNames.Add(ing.IngredientName);
             }
         }
 
