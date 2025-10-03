@@ -33,7 +33,7 @@ public class KitchenManager : MonoBehaviour
         GameObject dishPrefab = dishPrefabs[dishID];
 
         // Instantiate (create) the prefab in the scene
-        Instantiate(dishPrefab, orderWindow.position, Quaternion.identity);  //todo: specify location in order window
+        Instantiate(dishPrefab, orderWindow.position, Quaternion.identity); 
 
         Debug.Log("Successfully loaded dish: " + dishPrefab.name + " (ID: " + dishID + ")");
     }
