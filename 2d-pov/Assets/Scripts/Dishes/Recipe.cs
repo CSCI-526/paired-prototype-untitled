@@ -9,27 +9,26 @@ public class Recipe : ScriptableObject
 {
     public string dishName;
     public string ID;
-    public List<string> requiredIngredients = new List<string>();
+    public List<IngredientData> requiredIngredients = new List<IngredientData>();
     public GameObject dishPrefab; // The final food item to spawn
 
     public Sprite icon;
 
     // Check if the given ingredients match this recipe
-    public bool MatchesIngredients(List<string> ingredients)
+    public bool MatchesIngredients(List<Ingredient> ingredients)
     {
         if (ingredients.Count != requiredIngredients.Count)
             return false;
 
-        // Sort both lists to compare regardless of order
-        List<string> sortedIngredients = new List<string>(ingredients);
-        List<string> sortedRequired = new List<string>(requiredIngredients);
-        sortedIngredients.Sort();
-        sortedRequired.Sort();
+         // Extract the data from the given ingredient instances
+        var providedData = ingredients.Select(i => i.ingredientData).OrderBy(d => d.ingredientName).ToList();
+        var requiredData = requiredIngredients.OrderBy(d => d.ingredientName).ToList();
+
 
         // Check if all ingredients match
-        for (int i = 0; i < sortedIngredients.Count; i++)
+        for (int i = 0; i < providedData.Count; i++)
         {
-            if (sortedIngredients[i] != sortedRequired[i])
+            if (providedData[i] != requiredData[i])
                 return false;
         }
 

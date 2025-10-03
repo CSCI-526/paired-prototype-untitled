@@ -14,5 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Recipe
   dishName: Pain au Chocolat
   ID: 1
-  requiredIngredients: []
+  requiredIngredients:
+  - {fileID: 11400000, guid: da4a59453f92941c2ba5f9296bdb7b20, type: 2}
+  - {fileID: 11400000, guid: a2d6dcef50986434e87189d0a3d30060, type: 2}
   dishPrefab: {fileID: 8697571834776099116, guid: 052ceadee1ac746239b864660225f82a, type: 3}
+  icon: {fileID: 0}

@@ -14,7 +14,7 @@ public class KitchenManager : MonoBehaviour
         currentDishId = GameData.currentDishId;
 
         // reset currentDishId
-        GameData.currentDishId = -1;
+        // GameData.currentDishId = -1;
 
         if (currentDishId >= 0 && currentDishId < dishPrefabs.Length)
         {

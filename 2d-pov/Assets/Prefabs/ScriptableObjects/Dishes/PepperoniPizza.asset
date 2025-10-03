@@ -14,5 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Recipe
   dishName: Pepperoni Pizza
   ID: 3
-  requiredIngredients: []
+  requiredIngredients:
+  - {fileID: 11400000, guid: da4a59453f92941c2ba5f9296bdb7b20, type: 2}
+  - {fileID: 11400000, guid: 356fd3a04109c4e1e8388b95fba5887c, type: 2}
   dishPrefab: {fileID: 7029227814471459491, guid: 7a8e64c5d6dac4954b3fd97684495f48, type: 3}
+  icon: {fileID: 0}

@@ -1,70 +1,115 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
 public class RatingSystem : MonoBehaviour
 {
-    public Plate playerPlate;
-    public OrderDish orderDish;
-
+    [Header("Rating Settings")]
+    public Transform plateTransform; // Reference to the plate where dishes are created
+    public bool enableDebugLogs = true;
+    
+    // compare gameData with the Dish.recipe id to see if it is a match
+    // if it is then 3 stars 
+    // if not 1 stars
+    
     public void SubmitDish()
     {
         int stars = CalculateRating();
         Debug.Log("Rating: " + stars + " Stars!");
 
-        // You can add visual feedback here later
+        // Display visual feedback
         DisplayStars(stars);
+        
+        // Transition back to CustomerScene after a short delay
+        Invoke("TransitionToCustomerScene", 2f);
     }
 
     int CalculateRating()
     {
-        if (orderDish == null || playerPlate == null)
+        // Get the current dish ID from GameData
+        int expectedDishId = GameData.currentDishId;
+        
+        if (enableDebugLogs)
+            Debug.Log($"[RatingSystem] Expected Dish ID: {expectedDishId}");
+        
+        // Find the dish that was created on the plate
+        GameObject createdDish = FindDishOnPlate();
+        
+        if (createdDish == null)
         {
-            Debug.LogError("No order dish or player plate provided for rating!");
-            return 1;
+            if (enableDebugLogs)
+                Debug.LogWarning("[RatingSystem] No dish found on plate!");
+            return 1; // No dish = 1 star
         }
-
-        if (playerPlate.IsEmpty())
+        
+        // Get the Dish component and its recipe
+        Dish dishComponent = createdDish.GetComponent<Dish>();
+        if (dishComponent == null || dishComponent.recipe == null)
         {
-            Debug.Log("Plate is empty!");
-            return 1;
+            if (enableDebugLogs)
+                Debug.LogWarning("[RatingSystem] Dish has no Recipe component!");
+            return 1; // No recipe = 1 star
         }
-
-        // // Get ingredient names from the plate
-        // List<string> plateIngredients = new List<string>(playerPlate.GetIngredientNames());
-        // List<string> orderDishes = new List<string>(orderDish.dishes);
-
-        // // Check if counts match
-        // if (plateIngredients.Count != orderDishes.Count)
-        // {
-        //     Debug.Log("Wrong number of ingredients!");
-        //     return 1;
-        // }
-
-        // // Sort both lists for comparison
-        // plateIngredients.Sort();
-        // orderDishes.Sort();
-
-        // // Check if all ingredients match
-        // for (int i = 0; i < plateIngredients.Count; i++)
-        // {
-        //     if (plateIngredients[i] != orderDishes[i])
-        //     {
-        //         Debug.Log("Ingredient mismatch: Expected " + orderDishes[i] + " but got " + plateIngredients[i]);
-        //         return 1;
-        //     }
-        // }
-
-        // check if the child component game object under playerPlate has the same dishName as one of the orderDish.dishes
-        string plateDishName = playerPlate.getDishName();
-        string orderDishName = orderDish.orderName;
-
-        if (plateDishName == orderDishName)
+        
+        // Compare IDs
+        string dishRecipeId = dishComponent.recipe.ID;
+        
+        if (enableDebugLogs)
+            Debug.Log($"[RatingSystem] Created Dish ID: {dishRecipeId}, Expected: {expectedDishId}");
+        
+        // Check if the dish ID matches the expected ID
+        // Convert expected ID to string for comparison (assuming Recipe.ID is string)
+        if (dishRecipeId == expectedDishId.ToString())
         {
-            Debug.Log("Dish names match!");
-            return 5;
+            if (enableDebugLogs)
+                Debug.Log("[RatingSystem] Perfect match! 3 stars!");
+            return 3; // Perfect match = 3 stars
         }
-
-        return 10; // Partial match
+        else
+        {
+            if (enableDebugLogs)
+                Debug.Log("[RatingSystem] Wrong dish! 1 star.");
+            return 1; // Wrong dish = 1 star
+        }
+    }
+    
+    GameObject FindDishOnPlate()
+    {
+        if (plateTransform == null)
+        {
+            // Try to find the plate if not assigned
+            CombinationSystem combSystem = FindObjectOfType<CombinationSystem>();
+            if (combSystem != null)
+                plateTransform = combSystem.plate;
+        }
+        
+        if (plateTransform == null)
+        {
+            Debug.LogError("[RatingSystem] No plate transform found!");
+            return null;
+        }
+        
+        // Look for a dish (object with Dish component) on the plate
+        foreach (Transform child in plateTransform)
+        {
+            Dish dish = child.GetComponent<Dish>();
+            if (dish != null)
+            {
+                if (enableDebugLogs)
+                    Debug.Log($"[RatingSystem] Found dish: {child.name}");
+                return child.gameObject;
+            }
+        }
+        
+        return null;
+    }
+    
+    void TransitionToCustomerScene()
+    {
+        if (enableDebugLogs)
+            Debug.Log("[RatingSystem] Transitioning to CustomerScene...");
+        
+        SceneManager.LoadScene("CustomerScene");
     }
 
     void DisplayStars(int stars)

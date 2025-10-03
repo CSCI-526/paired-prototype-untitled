@@ -209,6 +209,13 @@ public class DraggableIngredient : MonoBehaviour
     {
         Vector3 mousePos = Input.mousePosition;
         
+        // Validate mouse position first
+        if (!IsValidMousePosition(mousePos))
+        {
+            Debug.LogWarning($"[{gameObject.name}] Invalid mouse position detected: {mousePos}. Using fallback.");
+            mousePos = new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0f);
+        }
+        
         if (enableDebugLogs)
         {
             Debug.Log($"[{gameObject.name}] Raw Mouse Position: {mousePos}");
@@ -234,6 +241,13 @@ public class DraggableIngredient : MonoBehaviour
                 // Convert local canvas point to world position
                 Vector3 worldPos = canvasRect.TransformPoint(localPoint);
                 
+                // Validate world position
+                if (!IsValidWorldPosition(worldPos))
+                {
+                    Debug.LogWarning($"[{gameObject.name}] Invalid world position from canvas: {worldPos}. Using transform position.");
+                    return transform.position;
+                }
+                
                 if (enableDebugLogs)
                 {
                     Debug.Log($"[{gameObject.name}] Canvas Local Point: {localPoint}, World Pos: {worldPos}");
@@ -243,9 +257,23 @@ public class DraggableIngredient : MonoBehaviour
             }
         }
         
+        // Validate camera before using it
+        if (mainCamera == null)
+        {
+            Debug.LogError($"[{gameObject.name}] No camera found for ScreenToWorldPoint!");
+            return transform.position;
+        }
+        
         // Fallback to standard screen-to-world conversion for non-Canvas objects
         mousePos.z = mainCamera.nearClipPlane + dragOffset;
         Vector3 fallbackWorldPos = mainCamera.ScreenToWorldPoint(mousePos);
+        
+        // Validate fallback position
+        if (!IsValidWorldPosition(fallbackWorldPos))
+        {
+            Debug.LogWarning($"[{gameObject.name}] Invalid fallback world position: {fallbackWorldPos}. Using transform position.");
+            return transform.position;
+        }
         
         if (enableDebugLogs)
         {
@@ -253,6 +281,19 @@ public class DraggableIngredient : MonoBehaviour
         }
         
         return fallbackWorldPos;
+    }
+    
+    bool IsValidMousePosition(Vector3 mousePos)
+    {
+        return !float.IsNaN(mousePos.x) && !float.IsNaN(mousePos.y) && !float.IsNaN(mousePos.z) &&
+               !float.IsInfinity(mousePos.x) && !float.IsInfinity(mousePos.y) && !float.IsInfinity(mousePos.z);
+    }
+    
+    bool IsValidWorldPosition(Vector3 worldPos)
+    {
+        return !float.IsNaN(worldPos.x) && !float.IsNaN(worldPos.y) && !float.IsNaN(worldPos.z) &&
+               !float.IsInfinity(worldPos.x) && !float.IsInfinity(worldPos.y) && !float.IsInfinity(worldPos.z) &&
+               Mathf.Abs(worldPos.x) < 1000000f && Mathf.Abs(worldPos.y) < 1000000f && Mathf.Abs(worldPos.z) < 1000000f;
     }
 
     Plate GetPlateBelow()

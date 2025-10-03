@@ -6,13 +6,18 @@ public class CombinationSystem : MonoBehaviour
 {
     public Transform plate; // Reference to the Plate/Dish GameObject
     public List<Recipe> allRecipes = new List<Recipe>(); // Assign in Inspector
+    public bool enableDebugLogs = true;
 
     // Call this whenever ingredients are added to the plate
+    /**
+    * Combination system should allow players to select which ingredient to combine.
+    * For simplicity, this example checks all ingredients on the plate and tries to match any recipe.
+    */
     public void CheckForCombinations()
     {
         // Get all ingredient children on the plate
         List<GameObject> ingredientObjects = new List<GameObject>();
-        List<string> ingredientNames = new List<string>();
+        List<Ingredient> ingredients = new List<Ingredient>();
 
         foreach (Transform child in plate)
         {
@@ -20,22 +25,23 @@ public class CombinationSystem : MonoBehaviour
             if (ing != null)
             {
                 ingredientObjects.Add(child.gameObject);
-                string name = ing.IngredientName;
-                ingredientNames.Add(name);
+                ingredients.Add(ing);
             }
         }
 
         // Need at least 2 ingredients to combine
-        if (ingredientNames.Count < 2)
+        if (ingredients.Count < 2)
             return;
 
         // Check all recipes to find a match
         foreach (Recipe recipe in allRecipes)
         {
-            if (recipe.MatchesIngredients(ingredientNames))
+            if (recipe.MatchesIngredients(ingredients))
             {
-                Debug.Log("Recipe found: " + recipe.dishName);
+                if (enableDebugLogs)
+                    Debug.Log("Recipe found: " + recipe.dishName);
                 CombineIntoDish(ingredientObjects, recipe);
+                Debug.Log($"{GameData.currentDishId} is the current dish id");
                 return; // Stop after first match
             }
         }
@@ -57,12 +63,13 @@ public class CombinationSystem : MonoBehaviour
             GameObject dish = Instantiate(recipe.dishPrefab, plate.position, Quaternion.identity);
             dish.transform.SetParent(plate);
             dish.transform.localPosition = Vector3.zero;
-
-            Debug.Log("Created dish: " + recipe.dishName);
+            if (enableDebugLogs)
+                Debug.Log("Created dish: " + recipe.dishName);
         }
         else
         {
-            Debug.LogWarning("Recipe " + recipe.dishName + " has no dish prefab assigned!");
+            if (enableDebugLogs)
+                Debug.LogWarning("Recipe " + recipe.dishName + " has no dish prefab assigned!");
         }
     }
 
@@ -70,7 +77,7 @@ public class CombinationSystem : MonoBehaviour
     public void CheckForCombinationsWithCount(int minIngredients)
     {
         List<GameObject> ingredientObjects = new List<GameObject>();
-        List<string> ingredientNames = new List<string>();
+        List<Ingredient> ingredients = new List<Ingredient>();
 
         foreach (Transform child in plate)
         {
@@ -78,17 +85,17 @@ public class CombinationSystem : MonoBehaviour
             if (ing != null)
             {
                 ingredientObjects.Add(child.gameObject);
-                ingredientNames.Add(ing.IngredientName);
+                ingredients.Add(ing);
             }
         }
 
-        if (ingredientNames.Count < minIngredients)
+        if (ingredients.Count < minIngredients)
             return;
 
         // Try to find exact matches first
         foreach (Recipe recipe in allRecipes)
         {
-            if (recipe.MatchesIngredients(ingredientNames))
+            if (recipe.MatchesIngredients(ingredients))
             {
                 CombineIntoDish(ingredientObjects, recipe);
                 return;

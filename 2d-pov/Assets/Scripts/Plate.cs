@@ -12,10 +12,11 @@ public class Plate : MonoBehaviour
 
     [Header("Visual Feedback")]
     public GameObject highlightEffect; // Optional highlight when hovering
-    public Color highlightColor = Color.yellow;
+    public Color highlightColor;
+    //---------------FLAG: dont do draggable ingredients because whatif the food needs to get dragged
+    // for simplicity, dont drag the recipe dish, just click on the trash to delete the food
 
-
-    private List<DraggableIngredient> ingredientsOnPlate = new List<DraggableIngredient>();
+    private List<DraggableIngredient> ingredientsOnPlate; 
     private SpriteRenderer plateRenderer;
     private Color originalColor;
 
@@ -27,6 +28,9 @@ public class Plate : MonoBehaviour
 
     void Start()
     {
+        ingredientsOnPlate = new List<DraggableIngredient>();
+        highlightColor = Color.yellow;
+
         plateRenderer = GetComponent<SpriteRenderer>();
         if (plateRenderer != null)
             originalColor = plateRenderer.color;
